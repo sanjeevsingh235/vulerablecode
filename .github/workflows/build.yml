@@ -8,13 +8,14 @@ on:
     branches:
       - main
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
-  # ─────────────────────────────────────────
-  # JOB 1: Build + SAST (SonarQube)
-  # ─────────────────────────────────────────
   build-and-sast:
     name: Build & SonarQube SAST
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -45,4 +46,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=vulnerable-spring-boot
+        run: |
+          mvn -B verify \
+          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=vulnerable-spring-boot \
+          -Dsonar.host.url=${SONAR_HOST_URL} \
+          -Dsonar.token=${SONAR_TOKEN}
