@@ -21,7 +21,6 @@
         <java.version>17</java.version>
         <sonar.projectKey>vulnerable-spring-boot</sonar.projectKey>
         <sonar.projectName>vulnerable-spring-boot</sonar.projectName>
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
     </properties>
 
     <dependencies>
